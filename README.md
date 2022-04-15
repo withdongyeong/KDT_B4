@@ -10,9 +10,9 @@ B4팀
 
 사용자로부터 폰트에 대한 속성 37가지를 입력받아
 
-1. `[Attr2Font](https://github.com/hologerry/Attr2Font)(GAN)`를 사용하여 입력된 속성 37가지로부터 52개의 glyph 이미지를 생성한다.
+1. [Attr2Font](https://github.com/hologerry/Attr2Font)(GAN)를 사용하여 입력된 속성 37가지로부터 52개의 glyph 이미지를 생성한다.
  
-2. `[dmfont](https://github.com/clovaai/fewshot-font-generation)(GAN)`를 사용하여 52개의 glyph를 약 2400개 이상의 glyph 이미지 집합으로 확장한다.
+2. [dmfont](https://github.com/clovaai/fewshot-font-generation)(GAN)를 사용하여 52개의 glyph를 약 2400개 이상의 glyph 이미지 집합으로 확장한다.
 
 3. `fontforge`를 사용하여 glyph 이미지 집합으로부터 .ttf(true type font) 파일을 생성한다.
 
