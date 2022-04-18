@@ -1,3 +1,6 @@
 [submodule "Attr2Font"]
 	path = Attr2Font
 	url = https://github.com/withdongyeong/Attr2Font
+[submodule "fewshot-font-generation"]
+	path = fewshot-font-generation
+	url = https://github.com/clovaai/fewshot-font-generation
