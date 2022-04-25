@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ganafont.urls'
+ROOT_URLCONF = 'dongyeong_book.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ganafont.wsgi.application'
+WSGI_APPLICATION = 'dongyeong_book.wsgi.application'
 
 
 # Database
