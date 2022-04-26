@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gan A Font</title>
+
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Carter+One&family=Noto+Sans+KR&family=Roboto+Slab:wght@200;400&family=Sunflower:wght@300;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/my_default.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/font_maker.css'%}">
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <!--font awesome kit-->
+    <script src="https://kit.fontawesome.com/451f49eee4.js" crossorigin="anonymous"></script>
+    <script>
+        // (동영입력)
+        // 메인 속성, 서브 속성 정보 입력: key=속성이름, value=속성 기본값(0~100 사이)
+        const attr_main = {
+            'attr_1': 50,
+            'attr_2': 60,
+            'attr_3': 30,
+        }
+        const attr_sub = {
+            'attr_4': 50,
+            'attr_5': 60,
+            'attr_6': 30,
+            '새로운 속성': 100,
+            '새로운 속성2': 80
+        }
+
+        window.onload = function() {
+            // html에서 메인속성, 서브속성 넣을 영역 지정
+            const $attr_main = $('#attr-main');
+            const $attr_sub = $('#attr-sub');
+
+            // 속성 세팅 함수: 속성정보 object, 생성할 html 요소 받기
+            const setAttribute = function(attr_obj, parent) {
+                // 목록 리셋
+                parent.empty();
+
+                // 속성정보 담긴 object 돌면서 html 요소 동적생성
+                for (const [key, value] of Object.entries(attr_obj)) {
+
+                    const $li = $('<li class="flex-between"></li>');
+
+                    // 속성 이름별로 label, input-range, output 생성
+                    const $label = $('<label for="input_' + key + '">' + key + '</label>');
+                    // (동영입력) 스크롤바 값 범위 바꾸고 싶으면 input의 min, max값 바꾸기 (현재 0~100)
+                    const $input = $('<input type="range" min="0" max="100" value="'+ value +'" class="slider" id="input_'+ key +'" >');
+                    const $output = $('<span class="slider-output">'+ value + '</span>');
+
+                    $li.append($label);
+                    $li.append($input);
+                    $li.append($output);
+
+                    parent.append($li);
+
+                    // 스크롤 이동 시 값 출력
+                    $input.on('input', function() {
+                        $output.html($(this).val());
+                    })
+                }
+            }
+            // object 별 초기 세팅
+            setAttribute(attr_main, $attr_main);
+            setAttribute(attr_sub, $attr_sub);
+
+            // 버튼 클릭 이벤트 지정
+            const $btn_sample = $(".btn-wrap .btn_sample");
+            const $btn_random = $('.btn-wrap .btn_random');
+            const $btn_submit = $(".btn-wrap .btn_create");
+
+            // sample 클릭 = 초기화
+            $btn_sample.on("click", function(){
+                console.log('sample clicked');
+                // (동영입력) sample 클릭 값 바꾸고 싶으면 setAttribute 함수 첫 번째 인자에 object 수정
+                setAttribute(attr_main, $attr_main);
+                setAttribute(attr_sub, $attr_sub);
+            });
+
+            // 랜덤 속성값 만드는 함수
+            const getRandom = function (obj) {
+                // 깊은 복사
+                const original_obj = jQuery.extend(true, {}, obj);
+                // 복사한 object에 랜덤값 업데이트
+                Object.keys(original_obj).forEach(key => {
+                    original_obj[key] = Math.floor(Math.random() * 101); // 0~100 사이 랜덤 정수
+                });
+                return original_obj;
+            }
+
+            // random 클릭 = 속성값 랜덤
+            $btn_random.on('click', function() {
+                console.log('random clicked');
+
+                // 랜덤값으로 바꾼 객체로 다시 속성 세팅
+                setAttribute(getRandom(attr_main), $attr_main);
+                setAttribute(getRandom(attr_sub), $attr_sub);
+            });
+        }
+    </script>
+
+</head>
+<body>
+    <div id="root">
+        <header>
+            <div class="header-container fm-container flex-between">
+                <!-- (동영입력) 프로젝트명 : 가나폰트 (Gan A Font) -->
+                <h1><a href="#">가나폰트</a></h1>
+                <nav>
+                    <ul class="flex-end">
+                        <li>
+                            <a href="{% url 'main' %}#projects">Projects</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--헤더 부분
+                헤더는 스크롤 내려도 고정되게 만듦
+                about, project 클릭 시 해당 부분으로 이동
+                withdongyeong 로고 클릭 시 맨 위로 이동
+                -->
+            </div>
+        </header>
+
+        <main>
+            <div class="fm-container">
+                <section class="main-section">
+                    <form>
+                        <ul class="btn-wrap flex-start">
+                            <!-- (동영입력) 버튼 텍스트 변경 가능 (예시, 랜덤, 생성) -->
+                            <li><button class="btn_fm btn_sample" type="button">예시</button></li>
+                            <li><button class="btn_fm btn_random" type="button">랜덤</button></li>
+                            <li><button class="btn_fm btn_create" type="submit">생성</button></li>
+                        </ul>
+                        <div id="fm-content" class="flex-between">
+                            <div class="fm-content-half fm-content-left">
+                                <div class="attr-wrap">
+                                    <h3>기본 속성</h3>
+                                    <ul id="attr-main">
+                                        <!-- 동적생성됨 -->
+                                        <!-- <li class="flex-between">
+                                            <label for="attr_1">기본 속성1</label>
+                                            <input type="range" min="1" max="100" value="10" class="slider" id="attr_1">
+                                            <span class="slider-output">50</span>
+                                        </li> -->
+                                    </ul>
+                                </div>
+
+                                <div class="attr-wrap">
+                                    <h3>추가 속성</h3>
+                                    <ul id="attr-sub">
+                                        <!-- 동적생성됨 -->
+                                        <!-- <li class="flex-between">
+                                            <label for="attr_4">기본 속성1</label>
+                                            <input type="range" min="1" max="100" value="40" class="slider" id="attr_4">
+                                            <span class="slider-output">50</span>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="fm-content-half fm-content-right">
+                                <!-- (동영입력) form submit한 결과물 출력하는 부분 -->
+                                <!-- generatedFontName: 폰트명 등 -->
+                                <h3>생성된 폰트 : <span id="generatedFontName">oo체</span></h3>
+                                <div class="font-img-wrap">
+                                    <!-- generatedFontImg: 폰트 이미지 -->
+                                    <img id="generatedFontImg" src="https://via.placeholder.com/700x500" alt="생성된 폰트 이미지">
+                                </div>
+
+                                <div class="fm_help">
+                                    <ul>
+                                        <!-- (동영입력) 기타 설명들 넣을 수 있음 -->
+                                        <li><p>폰트 생성기로 새로운 폰트를 만들 수 있습니다.</p></li>
+                                        <li><p>기본 속성값을 넣어주세요. 초기값은 50입니다.</p></li>
+                                        <li><p>추가 속성값을 넣어주세요. 초기값은 50입니다.</p></li>
+                                        <li><p>기타 필요한 설명이 있으면 여기 적읍시다.</p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

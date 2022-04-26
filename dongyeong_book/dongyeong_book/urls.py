@@ -20,5 +20,5 @@ from ganafont.views import ganafont
 
 urlpatterns = [
     path('', main, name='main'),
-    path('ganafont', ganafont),
+    path('ganafont', ganafont, name='ganafont'),
 ]
