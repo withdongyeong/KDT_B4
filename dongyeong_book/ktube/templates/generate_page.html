@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <title>국뽕봇</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{%static 'assets/favicon.ico' %}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">국뽕봇</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="../">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page content-->
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1 id="generated">{{ generated_text }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <label >생성 키워드: </label>
+                <input id="keyword" type="text" name="keyword" value={{ before_keyword }}>
+                <p></p>
+                <label >최대 글자수: </label>
+                <input id="length" type="int" name="length" value={{ before_length }}>
+                <p></p>
+                <label >Temperature: </label>
+                <input id="length" type="float" name="temperature" value={{ before_temperature }}>
+                <input type="submit" value="OK">
+            </form>
+            <p></p>
+            <a id="kakao-link-btn" href="javascript:;">
+            <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+            </a>
+            <script type='text/javascript'>
+              //<![CDATA[
+                Kakao.init('01f26a943f4df83f90aa0904d0a98fd1');
+
+                Kakao.Link.createDefaultButton({
+                  container: '#kakao-link-btn',
+                  objectType: 'feed',
+                  content: {
+                    title: document.getElementById('generated').innerText,
+                    description: '국뽕 봇이 생성한 문장입니다.',
+                    imageUrl: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
+                    link: {
+                      mobileWebUrl: 'http://withdongyeong.site/ktube',
+                      webUrl: 'http://withdongyeong.site/ktube'
+                    }
+                  },
+
+                });
+              //]]>
+            </script>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
