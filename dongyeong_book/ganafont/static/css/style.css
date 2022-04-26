@@ -1,0 +1,212 @@
+.header-container {
+    width: 1000px;
+    margin: 0 auto;
+    height: 100%;
+}
+.main-container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+#root {
+    overflow: auto;
+    width: 100%;
+}
+main {
+    position: relative;
+}
+h1, h2, h3, h4, h6, p, span, a {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.fab {
+    font-family: "Font Awesome 5 Brands";
+    font-size: 25px;
+    margin-right: 5px;
+}
+
+
+header {
+    position: fixed;
+    background: linear-gradient(#746FFF, #A381FF);
+    /* background-color: #746FFF;*/
+    height: 80px;
+    width: 100%;
+    z-index: 9999;
+}
+header a {
+    color: #ffffff;
+    font-family: 'Carter One','Black Han Sans', sans-serif;
+}
+header h1 {
+    font-size: 36px;
+}
+
+header nav ul li {
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.main-section {
+    width: 100%;
+    height: 100vh;
+    padding-top: 150px;
+}
+.main-section .section-title {
+    text-align: center;
+    
+}
+.main-section .section-title span {
+    display: inline-block;
+    padding: 5px 30px;
+    border-bottom: solid 2px gray;
+    font-family: 'Carter One','Black Han Sans', sans-serif;
+}
+
+#intro {
+    width: 100%;
+}
+#intro #py_intro {
+    width: 300px;
+    height: 100%;
+    margin: 0 auto;
+}
+#intro #py_intro pre {
+    text-align: start;
+    font-size: 20px;
+}
+
+
+#about .project-title{
+    margin-bottom: 100px;
+}
+#about .about-content {
+    height: 300px;
+    position: relative;
+    transform: translateY(50%);
+    background-color: #ededed;
+    padding: 30px 20px;
+}
+#profile {
+    margin-right: 20px;
+}
+.img-wrap {
+    overflow: hidden;
+}
+.profile-img-wrap {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+#profile img {
+    width: 100%;
+    height: 100%;
+}
+#profile img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+#profile h3 {
+    text-align: center;
+}
+#introduction {
+    position: relative;
+    width: calc(100% - 230px);
+    height: 100%;
+    font-size: 16px;
+}
+#introduction ul li {
+    margin-bottom: 5px;
+}
+#introduction p.description {
+    position: absolute;
+    bottom: 0;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 55px;
+}
+
+
+section#projects {
+    height: auto;
+}
+#projects ul li {
+    margin: 30px 0;
+    background-color: #ededed;
+    padding: 15px;
+    height:220px;
+}
+#projects ul li article {
+    height: 100%;
+}
+.project-img-wrap {
+    width: 180px;
+    height: 180px;
+    margin-right: 15px;
+}
+
+#projects ul li article img {
+    width: 100%;
+    height: 100%;
+}
+
+.project-content {
+    position: relative;
+    width: calc(100% - 200px);
+    height: 100%;
+}
+.project-content p, .project-content span {
+    font-size: 14px;
+}
+
+.project-content .project-header .project-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+.project-content .project-header p {
+    margin-bottom: 5px;
+}
+.project-content .project-header .project-tag-box {
+    margin-bottom: 5px;
+}
+.project-content .project-header span {
+    color: #ffffff;
+    background-color: #746FFF;
+    padding: 3px 5px;
+    border-radius: 10px;
+}
+.project-content .project-header .tag-stack {
+    background-color: #746FFF;
+}
+.project-content .project-header .tag-etc {
+    background-color: #E6CD4A;
+    color: #3E3D32;
+}
+.project-content .project-description p{
+    display: inline-block;
+    margin-top: 10px;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 60px;
+}
+.project-content .btn_more {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 14px;
+    background-color: #A6E22E;
+    padding: 5px 15px;
+    float: right;
+    border-radius: 20px;
+}
+
+footer {
+    margin: 50px 0;
+    padding-bottom: 50px;
+}
