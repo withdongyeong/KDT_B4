@@ -1,0 +1,7 @@
+decomposition: ../dmfont_config/decomposition_DM.json   # path to the "decomposition rule" file.
+n_primals: 68   # Number of entire primals.
+
+trainer:
+  #resume: /srv/KDT_B4/result/checkpoints/030000.pth
+  resume:
+  work_dir: ../result

@@ -1,0 +1,9 @@
+dset:
+  test:
+    extension: png
+    data_dir: ../attr2font_inference/
+    source_path: ../attr2font_inference/
+    source_ext: png
+    ref_chars: ../dmfont_config/ref_chars.json
+    gen_chars: ../dmfont_config/gen_chars.json
+
