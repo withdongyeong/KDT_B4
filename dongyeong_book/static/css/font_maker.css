@@ -1,0 +1,207 @@
+/* input range slider css */
+.slider {
+    -webkit-appearance: none;
+    width: 80%;
+    height: 12px;
+    border-radius: 10px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #04AA6D;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+}
+.fm-container {
+    width: 1300px;
+    margin: 0 auto;
+}
+
+.btn_fm {
+    font-size: 20px;
+    border: none;
+    color: white;
+    padding: 15px 50px;
+    cursor: pointer;
+    -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.5); 
+    box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.5);
+}
+.btn_fm:hover {
+    opacity: 0.9;
+    
+}
+.btn_sample {
+    background-color: #746FFF;
+}
+.btn_random {
+    background-color: #E6CD4A;
+}
+.btn_create {
+    background-color: #A6E22E;
+}
+
+.btn-wrap li {
+    margin-right: 30px;
+}
+header .fm-container h1 a {
+    font-family: 'Sunflower', sans-serif;
+    /* font-family: 'Carter One','Black Han Sans', sans-serif; */
+    font-weight: 400;
+    font-size: 45px;
+}
+
+
+#fm-content {
+    margin-top: 20px;
+    height: 100%;
+}
+#fm-content .fm-content-half {
+    width: 48%;
+    height: 100%;
+    max-height: 600px;
+}
+#fm-content .fm-content-left {
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#fm-content .fm-content-left::-webkit-scrollbar {
+    display: none;
+}
+#fm-content .fm-content-left .attr-wrap {
+    margin-bottom: 30px;
+}
+#fm-content .fm-content-left .attr-wrap h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+#fm-content .fm-content-left .attr-wrap ul li {
+    margin-bottom: 10px;
+}
+.attr-wrap label {
+    width: 20%;
+    display: inline-block;
+}
+.attr-wrap .slider {
+    width: 70%;
+}
+.attr-wrap .slider-output {
+    width: 5%;
+    display: inline-block;
+}
+
+
+#fm-content .fm-content-right h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+#fm-content .fm-content-right .font-img-wrap {
+    width:100%;
+    height: 400px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+#fm-content .fm-content-right .font-img-wrap img {
+    width: 100%;
+    height: 100%;
+}
+#fm-content .fm-content-right .fm_help ul li{
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+
+/* 모바일 버전 */
+@media (max-width: 767px) {
+    .fm-container {
+        width: 100%;
+        padding: 0 20px;
+    }
+    header .fm-container {
+        display: block;
+    }
+    header .fm-container h1 {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    header .fm-container h1 a {
+        margin: auto 0;
+        font-size: 30px;
+        transform: translateY(-50%);
+    }
+    header .fm-container nav {
+        display: none;
+    }
+    .btn-wrap {
+        justify-content: space-between;
+    }
+    .btn-wrap li {
+        width: 30%;
+        margin: 0;
+    }
+    .btn-wrap .btn_fm {
+        width:100%;
+        font-size: 14px;
+        padding: 10px 0;
+    }
+    #fm-content {
+        display: block;
+    }
+    #fm-content .fm-content-half {
+        max-width: none;
+        width: 100%;
+        
+    }
+    .slider {
+        -webkit-appearance: none;
+        width: 80%;
+        height: 10px;
+        border-radius: 10px;  
+    }
+    .slider::-webkit-slider-thumb {
+        width: 15px;
+        height: 15px;
+    }
+    #fm-content .fm-content-left .attr-wrap ul li {
+        margin-bottom: 5px;
+    }
+    #fm-content .fm-content-left .attr-wrap h3 {
+        font-size: 16px;
+    }
+    .attr-wrap label {
+        width: 17%;
+        font-size: 12px;
+    }
+    .attr-wrap .slider-output {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    #fm-content .fm-content-right h3 {
+        font-size: 20px;
+    }
+    #fm-content .fm-content-right .font-img-wrap {
+        height: 300px;
+    }
+
+    
+}
+
+

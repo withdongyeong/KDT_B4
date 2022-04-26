@@ -1,0 +1,15 @@
+[Unit]
+Description=uWSGI service
+After=syslog.target
+ 
+[Service]
+ExecStart=/home/ubuntu/fontvenv/bin/uwsgi -i /srv/KDT_B4/dongyeong_book/.config/uwsgi/dongyeong_book.ini
+ 
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+ 
+[Install]
+WantedBy=multi-user.target
