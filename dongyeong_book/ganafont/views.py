@@ -1,45 +1,20 @@
+import os
 from django.shortcuts import render
 from django.http import HttpResponse
 
+def attr2font_inference(attr_list):
+    cmd = "python ../Attr2Font/main.py --phase inference --data_root ../data --check_path ../Attr2Font/bestModel/ --infer_path ../inference"
+    cmd += " --attr_list"
+    for attr in attr_list:
+        cmd += " " + str(attr)
+    os.system(cmd)
+
 def ganafont(request):
-    test = "dddd"
+    test = ""
     if request.method == "POST":
-        test = "post"
-        print("attr_1 : ", request.POST.get('attr_1'))
-        print("attr_2 : ", request.POST.get('attr_2'))
-        print("attr_3 : ", request.POST.get('attr_3'))
-        print("attr_4 : ", request.POST.get('attr_4'))
-        print("attr_5 : ", request.POST.get('attr_5'))
-        print("attr_6 : ", request.POST.get('attr_6'))
-        print("attr_7 : ", request.POST.get('attr_7'))
-        print("attr_8 : ", request.POST.get('attr_8'))
-        print("attr_9 : ", request.POST.get('attr_9'))
-        print("attr_10 : ", request.POST.get('attr_10'))
-        print("attr_11 : ", request.POST.get('attr_11'))
-        print("attr_12 : ", request.POST.get('attr_12'))
-        print("attr_13 : ", request.POST.get('attr_13'))
-        print("attr_14 : ", request.POST.get('attr_14'))
-        print("attr_15 : ", request.POST.get('attr_15'))
-        print("attr_16 : ", request.POST.get('attr_16'))
-        print("attr_17 : ", request.POST.get('attr_17'))
-        print("attr_18 : ", request.POST.get('attr_18'))
-        print("attr_19 : ", request.POST.get('attr_19'))
-        print("attr_20 : ", request.POST.get('attr_20'))
-        print("attr_21 : ", request.POST.get('attr_21'))
-        print("attr_22 : ", request.POST.get('attr_22'))
-        print("attr_23 : ", request.POST.get('attr_23'))
-        print("attr_24 : ", request.POST.get('attr_24'))
-        print("attr_25 : ", request.POST.get('attr_25'))
-        print("attr_26 : ", request.POST.get('attr_26'))
-        print("attr_27 : ", request.POST.get('attr_27'))
-        print("attr_28 : ", request.POST.get('attr_28'))
-        print("attr_29 : ", request.POST.get('attr_29'))
-        print("attr_30 : ", request.POST.get('attr_30'))
-        print("attr_31 : ", request.POST.get('attr_31'))
-        print("attr_33 : ", request.POST.get('attr_32'))
-        print("attr_33 : ", request.POST.get('attr_33'))
-        print("attr_34 : ", request.POST.get('attr_34'))
-        print("attr_35 : ", request.POST.get('attr_35'))
-        print("attr_36 : ", request.POST.get('attr_36'))
-        print("attr_37 : ", request.POST.get('attr_37'))
+        attr_list = []
+        for x in range(1,38):
+            target = "attr_"+str(x)
+            attr_list.append(int(request.POST.get(target)))
+        attr2font_inference(attr_list)
     return render(request, "ganafont.html", {"test_sentence":test})
