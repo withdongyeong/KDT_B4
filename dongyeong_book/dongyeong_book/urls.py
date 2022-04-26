@@ -19,6 +19,6 @@ from main.views import main
 from ganafont.views import ganafont
 
 urlpatterns = [
-    path('', main),
+    path('', main, name='main'),
     path('ganafont', ganafont),
 ]
