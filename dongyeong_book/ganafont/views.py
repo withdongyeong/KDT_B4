@@ -65,8 +65,9 @@ def make_png_to_svg():
     for fileName in file_list:
         cmd = ""
         cmd += "/home/ubuntu/.cargo/bin/vtracer"
-        ## options
-#         cmd += " -f 11 --hierarchical cutout"
+        cmd += " --preset bw"
+        cmd += " --mode pixel"
+#         cmd += " -f 11 --hierarchical cutout --mode pixel"
         cmd += " --input " + png_dir + fileName
         cmd += " --output " + svg_dir + fileName.split(".")[0] + ".svg"
         os.system(cmd)
