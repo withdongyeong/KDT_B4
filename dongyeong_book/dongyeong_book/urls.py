@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views import main
-from ganafont.views import ganafont
+from ganafont.views import ganafont, downloadFile
 from ktube.views import ktube
 
 urlpatterns = [
     path('', main, name='main'),
     path('ganafont', ganafont, name='ganafont'),
     path('ktube', ktube, name='ktube'),
+    path("download", downloadFile, name="downloadFile")
 ]

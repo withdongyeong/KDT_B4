@@ -55,6 +55,9 @@
 .btn_create {
     background-color: #A6E22E;
 }
+.btn_download {
+    background-color: #C1FF6B;
+}
 
 .btn-wrap li {
     margin-right: 30px;

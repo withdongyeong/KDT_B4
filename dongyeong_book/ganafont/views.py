@@ -8,6 +8,9 @@ from PIL import Image
 import time
 import shutil
 import xml.etree.ElementTree as elemTree
+from django.http import FileResponse
+from django.core.files.storage import FileSystemStorage
+import mimetypes
 
 def preprocessForDMFont():
     start = time.time()
@@ -93,6 +96,15 @@ def svg_to_ttf():
     print("svg to ttf start")
     
     print("svg to ttf finish :", time.time() - start)
+    
+def downloadFile(request):
+    download_dir = "../result_ttf/"
+    if not os.path.isdir(download_dir):
+        os.mkdir(download_dir)
+    file_name = "ganafont.ttf"
+    file = open(download_dir + file_name, 'rb')
+    response = FileResponse(file)
+    return response
 
 def ganafont(request):
     test = ""
@@ -102,12 +114,12 @@ def ganafont(request):
         for x in range(1,38):
             target = "attr_"+str(x)
             attr_list.append(int(request.POST.get(target)))
-        attr2font_inference(attr_list)
-        preprocessForDMFont()
-        dmfont_inference()
-        make_png_to_svg()
-        edit_svg_view_box()
-        svg_to_ttf()
+#         attr2font_inference(attr_list)
+#         preprocessForDMFont()
+#         dmfont_inference()
+#         make_png_to_svg()
+#         edit_svg_view_box()
+#         svg_to_ttf()
         
         print("font generation time :", time.time() - start)
     return render(request, "ganafont.html", {"test_sentence":test})
