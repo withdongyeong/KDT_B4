@@ -9,8 +9,9 @@ import time
 import shutil
 import xml.etree.ElementTree as elemTree
 from django.http import FileResponse
-from django.core.files.storage import FileSystemStorage
 import mimetypes
+import sys
+import fontforge
 
 def preprocessForDMFont():
     start = time.time()
@@ -94,14 +95,32 @@ def edit_svg_view_box():
 def svg_to_ttf():
     start = time.time()
     print("svg to ttf start")
+    font = fontforge.font() # new font
+    font.encoding = 'UnicodeFull'
+    font.version = '1.0'
+    font.weight = 'Regular'
+    font.fontname = "Ganafont"
+    font.familyname = "Ganafont"
+    font.fullname = "Ganafont"
     
+    svgFilePaths = "../svg_for_fontforge/"
+    svg_list = os.listdir(svgFilePaths)
+    
+    char_list = os.listdir(svgFilePaths)
+    for char in char_list:
+        current_char = char.split(".")[0]
+        glyph = font.createChar(ord(current_char), current_char)
+        glyph.importOutlines(svgFilePaths + char)
+        
+    result_path = "../result_ttf/"
+    if not os.path.isdir(result_path):
+        os.mkdir(result_path)
+    font.generate(result_path + font.fontname + ".ttf")
     print("svg to ttf finish :", time.time() - start)
     
 def downloadFile(request):
     download_dir = "../result_ttf/"
-    if not os.path.isdir(download_dir):
-        os.mkdir(download_dir)
-    file_name = "ganafont.ttf"
+    file_name = "Ganafont.ttf"
     file = open(download_dir + file_name, 'rb')
     response = FileResponse(file)
     return response
@@ -114,12 +133,12 @@ def ganafont(request):
         for x in range(1,38):
             target = "attr_"+str(x)
             attr_list.append(int(request.POST.get(target)))
-#         attr2font_inference(attr_list)
-#         preprocessForDMFont()
-#         dmfont_inference()
-#         make_png_to_svg()
-#         edit_svg_view_box()
-#         svg_to_ttf()
+        attr2font_inference(attr_list)
+        preprocessForDMFont()
+        dmfont_inference()
+        make_png_to_svg()
+        edit_svg_view_box()
+        svg_to_ttf()
         
         print("font generation time :", time.time() - start)
     return render(request, "ganafont.html", {"test_sentence":test})
