@@ -108,6 +108,7 @@
             const $btn_sample = $(".btn-wrap .btn_sample");
             const $btn_random = $('.btn-wrap .btn_random');
             const $btn_submit = $(".btn-wrap .btn_create");
+            const $btn_download = $(".btn-wrap .btn_download");
 
             // sample 클릭 = 초기화
             $btn_sample.on("click", function(){
@@ -177,6 +178,10 @@
                             <li><button class="btn_fm btn_sample" type="button">예시</button></li>
                             <li><button class="btn_fm btn_random" type="button">랜덤</button></li>
                             <li><button class="btn_fm btn_create" type="submit">생성</button></li>
+                            <li>
+                                <a href="download">
+                                <button class="btn_fm btn_download" type="button">폰트 다운로드</button>
+                            <li>
                         </ul>
                         <div id="fm-content" class="flex-between">
                             <div class="fm-content-half fm-content-left">
