@@ -30,46 +30,16 @@
             'attr_3': 30,
             'attr_4': 50,
             'attr_5': 60,
-        }
-        const attr_sub = {
-            'attr_6': 50,
+            'attr_6': 60,
             'attr_7': 60,
-            'attr_8': 30,
+            'attr_8': 60,
             'attr_9': 60,
-            'attr_10': 30,
-            'attr_11': 50,
-            'attr_12': 60,
-            'attr_13': 30,
-            'attr_14': 60,
-            'attr_15': 30,
-            'attr_16': 30,
-            'attr_17': 50,
-            'attr_18': 60,
-            'attr_19': 30,
-            'attr_20': 60,
-            'attr_21': 50,
-            'attr_22': 60,
-            'attr_23': 30,
-            'attr_24': 60,
-            'attr_25': 30,
-            'attr_26': 30,
-            'attr_27': 50,
-            'attr_28': 60,
-            'attr_29': 30,
-            'attr_30': 60,
-            'attr_31': 50,
-            'attr_32': 60,
-            'attr_33': 30,
-            'attr_34': 60,
-            'attr_35': 30,
-            'attr_36': 30,
-            'attr_37': 50            
+            'attr_10': 60,
         }
 
         window.onload = function() {
             // html에서 메인속성, 서브속성 넣을 영역 지정
             const $attr_main = $('#attr-main');
-            const $attr_sub = $('#attr-sub');
 
             // 속성 세팅 함수: 속성정보 object, 생성할 html 요소 받기
             const setAttribute = function(attr_obj, parent) {
@@ -102,7 +72,6 @@
             }
             // object 별 초기 세팅
             setAttribute(attr_main, $attr_main);
-            setAttribute(attr_sub, $attr_sub);
 
             // 버튼 클릭 이벤트 지정
             const $btn_sample = $(".btn-wrap .btn_sample");
@@ -115,7 +84,6 @@
                 console.log('sample clicked');
                 // (동영입력) sample 클릭 값 바꾸고 싶으면 setAttribute 함수 첫 번째 인자에 object 수정
                 setAttribute(attr_main, $attr_main);
-                setAttribute(attr_sub, $attr_sub);
             });
 
             // 랜덤 속성값 만드는 함수
@@ -135,7 +103,6 @@
 
                 // 랜덤값으로 바꾼 객체로 다시 속성 세팅
                 setAttribute(getRandom(attr_main), $attr_main);
-                setAttribute(getRandom(attr_sub), $attr_sub);
             });
             
             $btn_create.on("click", function(){
@@ -185,24 +152,12 @@
                         <div id="fm-content" class="flex-between">
                             <div class="fm-content-half fm-content-left">
                                 <div class="attr-wrap">
-                                    <h3>기본 속성</h3>
+                                    <h3>속성 설정</h3>
                                     <ul id="attr-main">
                                         <!-- 동적생성됨 -->
                                         <!-- <li class="flex-between">
                                             <label for="attr_1">기본 속성1</label>
                                             <input type="range" min="1" max="100" value="10" class="slider" id="attr_1">
-                                            <span class="slider-output">50</span>
-                                        </li> -->
-                                    </ul>
-                                </div>
-
-                                <div class="attr-wrap">
-                                    <h3>추가 속성</h3>
-                                    <ul id="attr-sub">
-                                        <!-- 동적생성됨 -->
-                                        <!-- <li class="flex-between">
-                                            <label for="attr_4">기본 속성1</label>
-                                            <input type="range" min="1" max="100" value="40" class="slider" id="attr_4">
                                             <span class="slider-output">50</span>
                                         </li> -->
                                     </ul>
