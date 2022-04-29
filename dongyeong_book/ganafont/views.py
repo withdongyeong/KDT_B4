@@ -55,7 +55,8 @@ def dmfont_inference():
     start = time.time()
     print("dmfont inference start")
     cmd = "python ../fewshot-font-generation/inference.py ../dmfont_config/kor_eval.yaml ../dmfont_config/kor_ttf.yaml --model DM"
-    cmd += " --weight ../result/best_dm.pth --result_dir ../dmfont_inference"
+#     cmd += " --weight ../result/best_dm.pth --result_dir ../dmfont_inference"
+    cmd += " --weight ../korean-handwriting.pth --result_dir ../dmfont_inference"
     os.system(cmd)
     print("dmfont inference finish :", time.time() - start)
     
@@ -130,7 +131,7 @@ def ganafont(request):
     if request.method == "POST":
         start = time.time()
         attr_list = []
-        for x in range(1,38):
+        for x in range(1,11):
             target = "attr_"+str(x)
             attr_list.append(int(request.POST.get(target)))
         attr2font_inference(attr_list)
