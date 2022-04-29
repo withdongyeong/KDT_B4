@@ -128,18 +128,21 @@ def downloadFile(request):
 
 def ganafont(request):
     test = ""
+    attr_list = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
     if request.method == "POST":
         start = time.time()
         attr_list = []
         for x in range(1,11):
             target = "attr_"+str(x)
+            print("request.POST.get(target) : ", request.POST.get(target))
             attr_list.append(int(request.POST.get(target)))
-        attr2font_inference(attr_list)
-        preprocessForDMFont()
-        dmfont_inference()
-        make_png_to_svg()
-        edit_svg_view_box()
-        svg_to_ttf()
+#         attr2font_inference(attr_list)
+#         preprocessForDMFont()
+#         dmfont_inference()
+#         make_png_to_svg()
+#         edit_svg_view_box()
+#         svg_to_ttf()
         
         print("font generation time :", time.time() - start)
-    return render(request, "ganafont.html", {"test_sentence":test})
+    print("attr_list : ", attr_list)
+    return render(request, "ganafont.html", {"attr_list":attr_list})

@@ -36,7 +36,20 @@
             'attr_9': 60,
             'attr_10': 60,
         }
-
+        
+        const attr_kor = [
+            '예술적인',
+            '형식적인',
+            '우아한',
+            '현대적인',
+            '날카로운',
+            '부드러운',
+            '굵직한',
+            '가독성있는',
+            '필기체',
+            '매력적인',
+        ]
+        
         window.onload = function() {
             // html에서 메인속성, 서브속성 넣을 영역 지정
             const $attr_main = $('#attr-main');
@@ -47,12 +60,13 @@
                 parent.empty();
 
                 // 속성정보 담긴 object 돌면서 html 요소 동적생성
+                index = 0;
                 for (const [key, value] of Object.entries(attr_obj)) {
 
                     const $li = $('<li class="flex-between"></li>');
 
                     // 속성 이름별로 label, input-range, output 생성
-                    const $label = $('<label for="input_' + key + '">' + key + '</label>');
+                    const $label = $('<label for="input_' + attr_kor[index] + '">' + attr_kor[index] + '</label>');
                     // (동영입력) 스크롤바 값 범위 바꾸고 싶으면 input의 min, max값 바꾸기 (현재 0~100)
                     const $input = $('<input type="range" min="0" max="100" value="'+ value +'" class="slider" id="input_'+ key +
                                      '" name=' + key + ' >');
@@ -68,9 +82,14 @@
                     $input.on('input', function() {
                         $output.html($(this).val());
                     })
+                    index = index + 1;
                 }
             }
             // object 별 초기 세팅
+               temp_array = {{attr_list}};
+            for (var k = 1; k < 11; k++) {
+                attr_main['attr_' + String(k)] = temp_array[k-1];
+            }
             setAttribute(attr_main, $attr_main);
 
             // 버튼 클릭 이벤트 지정
@@ -82,6 +101,7 @@
             // sample 클릭 = 초기화
             $btn_sample.on("click", function(){
                 console.log('sample clicked');
+                console.log(temp_array);
                 // (동영입력) sample 클릭 값 바꾸고 싶으면 setAttribute 함수 첫 번째 인자에 object 수정
                 setAttribute(attr_main, $attr_main);
             });
@@ -106,8 +126,20 @@
             });
             
             $btn_create.on("click", function(){
-                
-
+                temp_array = {{attr_list}};
+                temp_dict = {
+                    'attr_1': temp_array[0],
+                    'attr_2': temp_array[1],
+                    'attr_3': temp_array[2],
+                    'attr_4': temp_array[3],
+                    'attr_5': temp_array[4],
+                    'attr_6': temp_array[5],
+                    'attr_7': temp_array[6],
+                    'attr_8': temp_array[7],
+                    'attr_9': temp_array[8],
+                    'attr_10': temp_array[9]
+                }           
+                setAttribute(temp_dict, $attr_main);
             });
         }
     </script>
