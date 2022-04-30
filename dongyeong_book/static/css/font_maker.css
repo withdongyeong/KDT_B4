@@ -37,7 +37,9 @@
     font-size: 20px;
     border: none;
     color: white;
-    padding: 15px 50px;
+    padding: 15px 0;
+    width: 180px;
+    text-align: center;
     cursor: pointer;
     -webkit-box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.5); 
     box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.5);
@@ -53,10 +55,10 @@
     background-color: #E6CD4A;
 }
 .btn_create {
-    background-color: #E6CD4A;
+    background-color: #A6E22E;
 }
 .btn_download {
-    background-color: #C1FF6B;
+    background-color: #04AA6D;
 }
 
 .btn-wrap li {
@@ -130,6 +132,11 @@ header .fm-container h1 a {
     font-size: 14px;
 }
 
+#keyword {
+    border: solid #ccc;
+    border-width: 1px
+}
+
 
 /* 모바일 버전 */
 @media (max-width: 767px) {
@@ -157,10 +164,11 @@ header .fm-container h1 a {
         justify-content: space-between;
     }
     .btn-wrap li {
-        width: 30%;
-        margin: 0;
+        width: 47%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
-    .btn-wrap .btn_fm {
+    .btn_fm {
         width:100%;
         font-size: 14px;
         padding: 10px 0;
