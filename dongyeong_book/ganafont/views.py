@@ -27,6 +27,9 @@ def preprocessForDMFont():
     #change file name (index to characters)    
     for file in file_list:
         idx = int(file.split("_")[1].split(".")[0])
+        # 호, 흐 를 구별하지 못 하고 흐로 만들고 있음에 대한 임시적 조치(데이터에서 빼는게 맞지만 시간문제)
+        if kor_characters[idx] == "호":
+            continue
         shutil.move(output_root_dir + file, inference_dir + kor_characters[idx] + ".png")
         
     #change 64x64 to 128x128 for DM-Font
