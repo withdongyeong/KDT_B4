@@ -169,14 +169,14 @@
         <main>
             <div class="fm-container">
                 <section class="main-section">
-                    <form method="POST">
+                    <form>
                         {% csrf_token %}
                         <h3> {{ test_sentence }} </h3>
                         <ul class="btn-wrap flex-start">
                             <!-- (동영입력) 버튼 텍스트 변경 가능 (예시, 랜덤, 생성) -->
                             <li><button class="btn_fm btn_sample" type="button">예시</button></li>
                             <li><button class="btn_fm btn_random" type="button">랜덤</button></li>
-                            <li><button class="btn_fm btn_create" type="submit">생성</button></li>
+                            <li><button class="btn_fm btn_create" type="submit" formmethod="POST" name="_method" value="generate"/>생성</button></li>
                             <li>
                                 <button class="btn_fm btn_download" type="button" onclick="location.href='download' " >폰트 다운로드</button>
                             <li>
@@ -195,23 +195,23 @@
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="fm-content-half fm-content-right">
                                 <!-- (동영입력) form submit한 결과물 출력하는 부분 -->
                                 <!-- generatedFontName: 폰트명 등 -->
-                                <h3>생성된 폰트 : <span id="generatedFontName">oo체</span></h3>
-                                <div class="font-img-wrap">
-                                    <!-- generatedFontImg: 폰트 이미지 -->
-                                    <img id="generatedFontImg" src="https://via.placeholder.com/700x500" alt="생성된 폰트 이미지">
-                                </div>
+                                <label >샘플 문장 : </label>
+                                <input id="keyword" type="text" name="keyword" value={{ sample_text }}>
+                                <button class="btn_fm btn_create" type="submit" formmethod="POST" name="_method" value="sample"/>샘플 보기</button>
+                                <br><br>
+                                <!-- generatedFontImg: 폰트 이미지 -->
+                                <img id="generatedFontImg" src="{% static 'sample/sample.png'%}" alt="생성된 폰트 이미지"/>
 
                                 <div class="fm_help">
                                     <ul>
                                         <!-- (동영입력) 기타 설명들 넣을 수 있음 -->
-                                        <li><p>폰트 생성기로 새로운 폰트를 만들 수 있습니다.</p></li>
-                                        <li><p>기본 속성값을 넣어주세요. 초기값은 50입니다.</p></li>
-                                        <li><p>추가 속성값을 넣어주세요. 초기값은 50입니다.</p></li>
-                                        <li><p>기타 필요한 설명이 있으면 여기 적읍시다.</p></li>
+                                        <li><p>샘플로 확인할 문장을 입력하세요</p></li>
+                                        <li><p>각 글자는 온전한 한글로 이루어져야 합니다.(ex. 가(o) ㅏ(x) a(x))</p></li>
+                                        <li><p>공백, 개행문자, 특수문자는 지원하지 않습니다 </p></li>
+                                        <li><p>한 줄에 10글자씩 출력됩니다</p></li>
                                     </ul>
                                 </div>
                             </div>

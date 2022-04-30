@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import time
 import shutil
 import cv2
-from PIL import Image
+from PIL import ImageFont, ImageDraw, Image
 import time
 import shutil
 import xml.etree.ElementTree as elemTree
@@ -119,6 +119,34 @@ def svg_to_ttf():
     font.generate(result_path + font.fontname + ".ttf")
     print("svg to ttf finish :", time.time() - start)
     
+def change_sample(sample_text):
+    sample_path = "ganafont/static/sample/"
+    image_name = "sample.png"
+    source_ttf = "../result_ttf/Ganafont.ttf"
+    
+    # 폰트 크기
+    font_size = 40
+    
+    # 줄 수
+    line = (len(sample_text)//10) + 1 if len(sample_text) != 10 else 1
+    
+    # 배경 이미지 크기
+    W, H = (len(sample_text) * font_size, font_size * line)
+    
+    # 흰색 배경
+    image = Image.new('RGB', (W, H), (255, 255, 255))
+    
+    font = ImageFont.truetype(source_ttf, font_size)
+    # 이미지 생성
+    draw = ImageDraw.Draw(image)
+
+    split_text = [sample_text[i:i+10] for i in range(0, len(sample_text), 10)]
+    for i in range(0, line):
+        # 배경 중간에 글자 배치
+        draw.text((0, (i*font_size)), split_text[i], fill="black", font=font)
+    image.save(sample_path + image_name)
+    return sample_text
+    
 def downloadFile(request):
     download_dir = "../result_ttf/"
     file_name = "Ganafont.ttf"
@@ -129,20 +157,29 @@ def downloadFile(request):
 def ganafont(request):
     test = ""
     attr_list = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
+    sample_text = "가나폰트"
+    # 현재 로컬에 데이터가 저장되기 때문에 이렇게 안하면 이전에 한 사람이 남긴걸 봐버림(지금도 여러 사람이 동시에 하면 봐버릴듯)
+    sample_text = change_sample(sample_text)
     if request.method == "POST":
-        start = time.time()
-        attr_list = []
-        for x in range(1,11):
-            target = "attr_"+str(x)
-            print("request.POST.get(target) : ", request.POST.get(target))
-            attr_list.append(int(request.POST.get(target)))
-#         attr2font_inference(attr_list)
-#         preprocessForDMFont()
-#         dmfont_inference()
-#         make_png_to_svg()
-#         edit_svg_view_box()
-#         svg_to_ttf()
+        if request.POST.get("_method") == "generate":
+            start = time.time()
+            attr_list = []
+            for x in range(1,11):
+                target = "attr_"+str(x)
+                attr_list.append(int(request.POST.get(target)))
+    #         attr2font_inference(attr_list)
+    #         preprocessForDMFont()
+    #         dmfont_inference()
+    #         make_png_to_svg()
+    #         edit_svg_view_box()
+    #         svg_to_ttf()
+            sample_text = change_sample(request.POST.get("keyword"))
         
-        print("font generation time :", time.time() - start)
-    print("attr_list : ", attr_list)
-    return render(request, "ganafont.html", {"attr_list":attr_list})
+            print("font generation time :", time.time() - start)
+        elif request.POST.get("_method") == "sample":
+            attr_list = []
+            for x in range(1,11):
+                target = "attr_"+str(x)
+                attr_list.append(int(request.POST.get(target)))
+            sample_text = change_sample(request.POST.get("keyword"))
+    return render(request, "ganafont.html", {"attr_list":attr_list, "sample_text":sample_text})

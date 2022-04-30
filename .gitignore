@@ -2,6 +2,7 @@ data
 attr2font_inference
 dmfont_inference
 
+dongyeong_book/ganafont/static/sample
 # Byte-cnference/ompiled / optimized / DLL files
 __pycache__/
 *.py[cod]
