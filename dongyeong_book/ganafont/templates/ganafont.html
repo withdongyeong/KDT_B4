@@ -44,7 +44,7 @@
             '현대적인',
             '날카로운',
             '부드러운',
-            '굵직한',
+            '단단한',
             '가독성있는',
             '필기체',
             '매력적인',
@@ -141,6 +141,8 @@
                 }           
                 setAttribute(temp_dict, $attr_main);
             });
+            serverState = {{ serverState }}
+            downloadable = {{ downloadable }}
         }
     </script>
 
@@ -168,18 +170,47 @@
 
         <main>
             <div class="fm-container">
+                
+                <style>
+                    .main-section {
+                        padding-top:0;
+                    }
+                    
+                    .server-check {
+                        width: 300px;
+                        margin: 0 auto;
+                        text-align: center;
+                    }
+                    
+                    .server-check .isAvailable {
+                        display: inline-block;
+                        margin-bottom: 20px;
+                        font-size: 20px;
+                        
+                    }
+                    .server-check .isAvailable.able { color: green;}
+                    .server-check .isAvailable.disable { color: red; }
+                </style>
+          
                 <section class="main-section">
+                    <div class="server-check">
+                        <span class="isAvailable">서버상태 : </span>
+                    {% if serverState == "available" %}
+                        <span class="isAvailable able" id = "server"> 사용가능 </h3>        
+                    {% else %}
+                        <span class="isAvailable disable"> 사용 중</h3>
+                    {% endif %}
+                    </div>
+                    
                     <form>
                         {% csrf_token %}
-                        <h3> {{ test_sentence }} </h3>
                         <ul class="btn-wrap flex-start">
                             <!-- (동영입력) 버튼 텍스트 변경 가능 (예시, 랜덤, 생성) -->
-                            <li><button class="btn_fm btn_sample" type="button">예시</button></li>
                             <li><button class="btn_fm btn_random" type="button">랜덤</button></li>
-                            <li><button class="btn_fm btn_create" type="submit" formmethod="POST" name="_method" value="generate"/>생성</button></li>
-                            <li>
-                                <button class="btn_fm btn_download" type="button" onclick="location.href='download' " >폰트 다운로드</button>
-                            <li>
+                            <li><button class="btn_fm btn_create" onclick = "document.getElementById('server').innerHTML = '생성 중'" type="submit" formmethod="POST" name="_method" value="generate"/>생성</button></li> 
+                            {% if downloadable %}
+                            <li><button class="btn_fm btn_download" type="button" onclick="location.href='download' " >폰트 다운로드</button><li>
+                            {% endif %}
                         </ul>
                         <div id="fm-content" class="flex-between">
                             <div class="fm-content-half fm-content-left">
@@ -210,8 +241,10 @@
                                         <!-- (동영입력) 기타 설명들 넣을 수 있음 -->
                                         <li><p>샘플로 확인할 문장을 입력하세요</p></li>
                                         <li><p>각 글자는 온전한 한글로 이루어져야 합니다.(ex. 가(o) ㅏ(x) a(x))</p></li>
-                                        <li><p>공백, 개행문자, 특수문자는 지원하지 않습니다 </p></li>
+                                        <li><p>숫자, 공백, 개행문자, 특수문자는 지원하지 않습니다 </p></li>
                                         <li><p>한 줄에 10글자씩 출력됩니다</p></li>
+                                        <li><p>생성에는 70~80초 정도 소요됩니다</p></li>
+                                        <li><p>서버가 사용중이면 잠시 기다렸다 새로고침해보세요</p></li>
                                     </ul>
                                 </div>
                             </div>
