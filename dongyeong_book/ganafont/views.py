@@ -16,9 +16,9 @@ import fontforge
 def preprocessForDMFont():
     start = time.time()
     print("preprocess for DM-Font start...")
-    kor_characters = [ "가", "깩", "끼", "냐", "걔", "삯", "떤", "에", "앉", "며", "않", "예", "돋", "뽈", "와", "맑", "쐐", "앎", "외", "밟","죠",
-    "곬", "쭉", "핥", "춰", "읊", "퀘", "앓", "튐", "퓨", "굽", "흐", "값", "긔", "귓", "러", "갔", "낭", "대", "맞", "땨", "옻","호", "칼","머",
-    "같", "베", "갚", "뼈", "낳", "약", "산"]
+    kor_characters = ['값', '같', '곬', '곶', '깎', '넋', '늪', '닫', '닭', '닻', '됩', '뗌', '략', '몃', '밟', '볘',
+    '뺐', '뽈', '솩', '쐐', '앉', '않', '얘', '얾', '엌', '옳', '읊', '죡', '쮜', '춰', '츄', '퀭', '틔', '핀', '핥',
+    '후']
     output_root_dir = "../attr2font_inference/"
     if not os.path.isdir(output_root_dir + "inference/"):
         os.mkdir(output_root_dir + "inference/")
@@ -27,14 +27,11 @@ def preprocessForDMFont():
     #change file name (index to characters)    
     for file in file_list:
         idx = int(file.split("_")[1].split(".")[0])
-        # 호, 흐 를 구별하지 못 하고 흐로 만들고 있음에 대한 임시적 조치(데이터에서 빼는게 맞지만 시간문제)
-        if kor_characters[idx] == "호":
-            continue
         shutil.move(output_root_dir + file, inference_dir + kor_characters[idx] + ".png")
         
     #change 64x64 to 128x128 for DM-Font
     trans_target = inference_dir
-    trans_list = os.listdir(trans_target)
+    trans_list = [x for x in os.listdir(trans_target) if x.endswith(".png")]
     
     resizeHeight = 128
     resizeWidth = 128
@@ -47,7 +44,7 @@ def preprocessForDMFont():
 def attr2font_inference(attr_list):
     start = time.time()
     print("attr2font inference start")
-    cmd = "python ../Attr2Font/main.py --phase inference --data_root ../data --check_path ../Attr2Font/bestModel/ --infer_path ../attr2font_inference"
+    cmd = "python ../Attr2Font/main.py --phase inference --data_root ../data_new --check_path ../Attr2Font/bestModel/ --infer_path ../attr2font_inference"
     cmd += " --attr_list"
     for attr in attr_list:
         cmd += " " + str(attr)
@@ -58,8 +55,8 @@ def dmfont_inference():
     start = time.time()
     print("dmfont inference start")
     cmd = "python ../fewshot-font-generation/inference.py ../dmfont_config/kor_eval.yaml ../dmfont_config/kor_ttf.yaml --model DM"
-#     cmd += " --weight ../result/best_dm.pth --result_dir ../dmfont_inference"
-    cmd += " --weight ../korean-handwriting.pth --result_dir ../dmfont_inference"
+    cmd += " --weight ../result/backup3.pth --result_dir ../dmfont_inference"
+#     cmd += " --weight ../fewshot-font-generation/korean-handwriting.pth --result_dir ../dmfont_inference"
     os.system(cmd)
     print("dmfont inference finish :", time.time() - start)
     
@@ -157,32 +154,52 @@ def downloadFile(request):
     response = FileResponse(file)
     return response
 
+def readServerState():
+    serverStateFilePath = "../server_state/server_state"
+    f = open(serverStateFilePath, 'r')
+    line = f.readline()
+    f.close()
+    return line
+
+def setServerState(state):
+    serverStateFilePath = "../server_state/server_state"
+    f = open(serverStateFilePath, 'w')
+    line = f.write(state)
+    f.close()
+
 def ganafont(request):
     test = ""
     attr_list = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
     sample_text = "가나폰트"
     # 현재 로컬에 데이터가 저장되기 때문에 이렇게 안하면 이전에 한 사람이 남긴걸 봐버림(지금도 여러 사람이 동시에 하면 봐버릴듯)
     sample_text = change_sample(sample_text)
+    downloadable = False
+    serverState = readServerState()
     if request.method == "POST":
         if request.POST.get("_method") == "generate":
-            start = time.time()
-            attr_list = []
-            for x in range(1,11):
-                target = "attr_"+str(x)
-                attr_list.append(int(request.POST.get(target)))
-    #         attr2font_inference(attr_list)
-    #         preprocessForDMFont()
-    #         dmfont_inference()
-    #         make_png_to_svg()
-    #         edit_svg_view_box()
-    #         svg_to_ttf()
-            sample_text = change_sample(request.POST.get("keyword"))
-        
-            print("font generation time :", time.time() - start)
+            if serverState != "available":
+                serverState = "not available"
+            else:
+                setServerState("not available")
+                start = time.time()
+                attr_list = []
+                for x in range(1,11):
+                    target = "attr_"+str(x)
+                    attr_list.append(int(request.POST.get(target)))
+                attr2font_inference(attr_list)
+                preprocessForDMFont()
+                dmfont_inference()
+                make_png_to_svg()
+                edit_svg_view_box()
+                svg_to_ttf()
+                sample_text = change_sample(request.POST.get("keyword"))
+                setServerState("available")
+                downloadable = True
+                print("font generation time :", time.time() - start)
         elif request.POST.get("_method") == "sample":
             attr_list = []
             for x in range(1,11):
                 target = "attr_"+str(x)
                 attr_list.append(int(request.POST.get(target)))
             sample_text = change_sample(request.POST.get("keyword"))
-    return render(request, "ganafont.html", {"attr_list":attr_list, "sample_text":sample_text})
+    return render(request, "ganafont.html", {"attr_list":attr_list, "sample_text":sample_text, "serverState":serverState, "downloadable":downloadable})

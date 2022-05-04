@@ -14,6 +14,7 @@
 }
 main {
     position: relative;
+    padding-top: 100px;
 }
 h1, h2, h3, h4, h6, p, span, a {
     font-family: 'Noto Sans KR', sans-serif;
@@ -49,7 +50,7 @@ header nav ul li {
 .main-section {
     width: 100%;
     height: 100vh;
-    padding-top: 150px;
+    
 }
 .main-section .section-title {
     text-align: center;
