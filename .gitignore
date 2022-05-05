@@ -1,6 +1,13 @@
 data
 attr2font_inference
 dmfont_inference
+data_new
+result_sample
+result_ttf
+svg_for_fontforge
+evaluator
+test_eval
+test_result
 
 dongyeong_book/ganafont/static/sample
 # Byte-cnference/ompiled / optimized / DLL files

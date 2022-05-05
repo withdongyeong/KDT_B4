@@ -8,7 +8,7 @@ dset:   # leave blank
       data_dir: /home/ubuntu/ttf_dmfont/valid
       extension: ttf
       n_gen: 20
-      n_font: 5
+      n_font: 50
       chars: 
       source_path: 
       source_ext: ttf
@@ -16,7 +16,7 @@ dset:   # leave blank
       data_dir: /home/ubuntu/ttf_dmfont/valid
       extension: ttf
       n_gen: 20
-      n_font: 5
+      n_font: 50
       chars: 
       source_path:
       source_ext: ttf
