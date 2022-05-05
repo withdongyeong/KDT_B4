@@ -12,6 +12,12 @@ from django.http import FileResponse
 import mimetypes
 import sys
 import fontforge
+import subprocess
+
+# sys.path.append((os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))))))
+
+# from Attr2Font import main as attr2font
+# from Attr2Font import *
 
 def preprocessForDMFont():
     start = time.time()
@@ -44,20 +50,19 @@ def preprocessForDMFont():
 def attr2font_inference(attr_list):
     start = time.time()
     print("attr2font inference start")
-    cmd = "python ../Attr2Font/main.py --phase inference --data_root ../data_new --check_path ../Attr2Font/bestModel/ --infer_path ../attr2font_inference"
+    cmd = "source /home/ubuntu/fontvenv/bin/activate && python ../Attr2Font/main.py --phase inference --data_root ../data_new --check_path ../Attr2Font/bestModel/ --infer_path ../attr2font_inference"
     cmd += " --attr_list"
     for attr in attr_list:
         cmd += " " + str(attr)
-    os.system(cmd)
+    sp = subprocess.call('/bin/bash -c "$GREPDB"', shell=True, env={'GREPDB': cmd})
     print("attr2font inference finish :", time.time() - start)
     
 def dmfont_inference():
     start = time.time()
     print("dmfont inference start")
-    cmd = "python ../fewshot-font-generation/inference.py ../dmfont_config/kor_eval.yaml ../dmfont_config/kor_ttf.yaml --model DM"
-    cmd += " --weight ../result/backup3.pth --result_dir ../dmfont_inference"
-#     cmd += " --weight ../fewshot-font-generation/korean-handwriting.pth --result_dir ../dmfont_inference"
-    os.system(cmd)
+    cmd = "source /home/ubuntu/fontvenv/bin/activate && python ../fewshot-font-generation/inference.py ../dmfont_config/kor_eval.yaml ../dmfont_config/kor_ttf.yaml --model DM"
+    cmd += " --weight ../dmfont_checkpoint/best_dm.pth --result_dir ../dmfont_inference"
+    sp = subprocess.call('/bin/bash -c "$GREPDB"', shell=True, env={'GREPDB': cmd})
     print("dmfont inference finish :", time.time() - start)
     
 def make_png_to_svg():
@@ -67,15 +72,22 @@ def make_png_to_svg():
     file_list = [_ for _ in os.listdir(png_dir) if _.endswith(".png")]
     fileNames = file_list    
     svg_dir = "../svg_for_fontforge/"
-    for fileName in file_list:
+    # 가상환경 적용하면 너무 오래걸리는 문제가 있음(subprocess를 너무많이 호출해서)
+    # 그렇다고 한줄 호출하기에는 argument가 너무 길며
+    # python module이 아니기에 import 할수도없음
+    # 임시적으로 local os.system으로 cmd 실행
+    for fileName in file_list[:len(file_list)//2]:
+#         cmd = "source /home/ubuntu/fontvenv/bin/activate"
         cmd = ""
-        cmd += "/home/ubuntu/.cargo/bin/vtracer"
-        cmd += " --preset bw"
-        cmd += " --mode pixel"
-#         cmd += " -f 11 --hierarchical cutout --mode pixel"
+#         base_cmd = " && /home/ubuntu/.cargo/bin/vtracer"
+        base_cmd = "/home/ubuntu/.cargo/bin/vtracer"
+        base_opt = " --preset bw --mode pixel"
+        cmd += base_cmd + base_opt 
         cmd += " --input " + png_dir + fileName
         cmd += " --output " + svg_dir + fileName.split(".")[0] + ".svg"
         os.system(cmd)
+#     sp = subprocess.call('/bin/bash -c "$GREPDB"', shell=True, env={'GREPDB': cmd})
+
     print("make png to svg finish :", time.time() - start)
     
 def edit_svg_view_box():
@@ -120,7 +132,7 @@ def svg_to_ttf():
     print("svg to ttf finish :", time.time() - start)
     
 def change_sample(sample_text):
-    sample_path = "ganafont/static/sample/"
+    sample_path = "/srv/KDT_B4/dongyeong_book/static/sample/"
     image_name = "sample.png"
     source_ttf = "../result_ttf/Ganafont.ttf"
     
