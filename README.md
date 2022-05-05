@@ -21,3 +21,5 @@ B4팀 조니조아아빠
 3. `fontforge`를 사용하여 glyph 이미지 집합으로부터 .ttf(true type font) 파일을 생성한다.
 
 Attribute의 사용자 입력과 생성된 .ttf 파일의 다운로드 서비스는 django를 통해 배포된 웹에서 이루어진다.
+
+![image](https://user-images.githubusercontent.com/89460254/166906127-c4884be7-cc34-4c5f-840a-1b792d79b5a1.png)
