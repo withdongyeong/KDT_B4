@@ -6,7 +6,7 @@ B4팀 조니조아아빠
 
 # 프로젝트명 : 가나폰트(GAN Attribute font)
 
-# 웹 배포 : http://withdongyeong.site/ganafont
+# 웹 배포 : ~~http://withdongyeong.site/ganafont~~ (현재 중단)
 
 # 프로젝트 요약
 
